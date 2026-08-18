@@ -1,0 +1,62 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        'primary': '#3c0004',
+        'primary-container': '#5d0e11',
+        'on-primary': '#ffffff',
+        'on-primary-container': '#e4746f',
+        'secondary': '#735c00',
+        'secondary-container': '#fed65b',
+        'on-secondary-container': '#745c00',
+        'secondary-fixed': '#ffe088',
+        'on-secondary-fixed': '#241a00',
+        'background': '#fbf9f8',
+        'on-background': '#1b1c1c',
+        'surface': '#fbf9f8',
+        'surface-bright': '#fbf9f8',
+        'surface-container-lowest': '#ffffff',
+        'surface-container-low': '#f6f3f2',
+        'surface-container': '#f0eded',
+        'surface-container-high': '#eae8e7',
+        'surface-container-highest': '#e4e2e1',
+        'on-surface': '#1b1c1c',
+        'on-surface-variant': '#564241',
+        'outline': '#897270',
+        'outline-variant': '#dcc0be',
+        'tertiary-fixed': '#e5e2dc',
+        'error': '#ba1a1a',
+        'error-container': '#ffdad6',
+        'on-error': '#ffffff',
+      },
+      fontFamily: {
+        'headline-lg': ['Playfair Display', 'serif'],
+        'display-sm': ['Playfair Display', 'serif'],
+        'title-md': ['Inter', 'sans-serif'],
+        'body-lg': ['Inter', 'sans-serif'],
+        'body-sm': ['Inter', 'sans-serif'],
+        'label-md': ['Inter', 'sans-serif'],
+        'pos-price': ['Inter', 'sans-serif'],
+      },
+      spacing: {
+        'gutter': '16px',
+        'grid-margin': '24px',
+        'touch-target': '44px',
+        'base': '8px',
+        'pos-gap': '12px',
+      },
+      borderRadius: {
+        'DEFAULT': '0.125rem',
+        'lg': '0.25rem',
+        'xl': '0.5rem',
+        'full': '0.75rem',
+      }
+    },
+  },
+  plugins: [],
+}
