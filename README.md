@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Restaurant Management System (Prakashraj R - Heritage Modernity)
 
 Full-stack production-ready application converted from Google Stitch Project ID `10084870089486909929`.
@@ -91,3 +92,6 @@ npm run dev
 ```
 
 The Vite proxy sends `/api` requests to `http://localhost:5000`.
+=======
+# Restaurant-management-app
+>>>>>>> 9e60970c756ea8d249fab38d6353adc6eef59c56
