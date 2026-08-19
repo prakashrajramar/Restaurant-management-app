@@ -12,15 +12,21 @@ const InstallAppButton: React.FC = () => {
   const [installPrompt, setInstallPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
 
-  const [isInstalled, setIsInstalled] = useState(false);
+  const [installed, setInstalled] = useState(false);
 
   useEffect(() => {
+    // Check if already installed as a PWA
+    const isStandalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      (window.navigator as any).standalone === true;
+
+    if (isStandalone) {
+      setInstalled(true);
+    }
+
     const handleBeforeInstallPrompt = (event: Event) => {
       event.preventDefault();
-
-      setInstallPrompt(
-        event as BeforeInstallPromptEvent
-      );
+      setInstallPrompt(event as BeforeInstallPromptEvent);
     };
 
     window.addEventListener(
@@ -28,26 +34,10 @@ const InstallAppButton: React.FC = () => {
       handleBeforeInstallPrompt
     );
 
-    // Check if already installed
-    const checkInstalled = () => {
-      const standalone =
-        window.matchMedia(
-          '(display-mode: standalone)'
-        ).matches ||
-        (window.navigator as any).standalone === true;
-
-      setIsInstalled(standalone);
-    };
-
-    checkInstalled();
-
-    window.addEventListener(
-      'appinstalled',
-      () => {
-        setIsInstalled(true);
-        setInstallPrompt(null);
-      }
-    );
+    window.addEventListener('appinstalled', () => {
+      setInstalled(true);
+      setInstallPrompt(null);
+    });
 
     return () => {
       window.removeEventListener(
@@ -58,36 +48,46 @@ const InstallAppButton: React.FC = () => {
   }, []);
 
   const handleInstall = async () => {
-    if (!installPrompt) return;
+    // Browser provided the install prompt
+    if (installPrompt) {
+      await installPrompt.prompt();
 
-    await installPrompt.prompt();
+      const { outcome } = await installPrompt.userChoice;
 
-    const choice = await installPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setInstalled(true);
+      }
 
-    if (choice.outcome === 'accepted') {
-      setIsInstalled(true);
+      setInstallPrompt(null);
+      return;
     }
 
-    setInstallPrompt(null);
+    // No browser prompt available
+    alert(
+      'To install this app, open your browser menu and select "Install App" or "Add to Home screen".'
+    );
   };
 
-  // Don't show if already installed
-  if (isInstalled) {
-    return null;
-  }
-
-  // Browser doesn't currently support the install prompt
-  if (!installPrompt) {
-    return null;
+  // Don't show button after app is installed
+  if (installed) {
+    return (
+      <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-green-100 text-green-700 border border-green-200">
+        <span className="material-symbols-outlined text-[18px]">
+          check_circle
+        </span>
+        <span className="text-sm font-bold">App Installed</span>
+      </div>
+    );
   }
 
   return (
     <button
+      type="button"
       onClick={handleInstall}
-      className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-on-primary shadow-sm transition hover:opacity-90"
+      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-on-primary font-bold text-sm shadow-sm hover:bg-primary-container transition-colors whitespace-nowrap"
       title="Install Restaurant Management App"
     >
-      <span className="material-symbols-outlined text-lg">
+      <span className="material-symbols-outlined text-[20px]">
         install_mobile
       </span>
 
