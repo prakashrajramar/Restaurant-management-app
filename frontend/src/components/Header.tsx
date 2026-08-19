@@ -1,5 +1,4 @@
 import React from 'react';
-import InstallAppButton from './InstallAppButton';
 
 interface HeaderProps {
   title: string;
@@ -18,6 +17,8 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-surface-container-highest pb-4 mb-6">
+
+      {/* Page Title */}
       <div>
         <h2 className="font-display-sm text-2xl sm:text-3xl font-bold text-on-surface">
           {title}
@@ -28,10 +29,12 @@ export const Header: React.FC<HeaderProps> = ({
         </p>
       </div>
 
+      {/* Right Side */}
       <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto justify-end">
 
-        {/* Global / Section Search Input */}
+        {/* Search */}
         <div className="flex items-center border border-outline-variant rounded-lg px-3 py-2 bg-surface-container-lowest focus-within:border-secondary transition-colors w-full sm:w-64">
+
           <span className="material-symbols-outlined text-on-surface-variant text-[20px] mr-2">
             search
           </span>
@@ -46,6 +49,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           {searchQuery && (
             <button
+              type="button"
               onClick={() => onSearchChange('')}
               className="text-on-surface-variant hover:text-primary"
             >
@@ -56,11 +60,8 @@ export const Header: React.FC<HeaderProps> = ({
           )}
         </div>
 
-        {/* Action Button */}
-        {actionButton}
-
         {/* Install App Button */}
-        <InstallAppButton />
+        {actionButton}
 
         {/* User Avatar */}
         <div
