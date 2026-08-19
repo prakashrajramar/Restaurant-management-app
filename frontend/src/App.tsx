@@ -11,6 +11,8 @@ import { BillsPage } from './pages/Bills';
 import { ReportsPage } from './pages/Reports';
 import { RestaurantSettings } from './types';
 import { api } from './api';
+import InstallAppButton from './components/InstallAppButton';
+
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
