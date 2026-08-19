@@ -15,18 +15,25 @@ const InstallAppButton: React.FC = () => {
   const [installed, setInstalled] = useState(false);
 
   useEffect(() => {
-    // Check if already installed as a PWA
-    const isStandalone =
-      window.matchMedia('(display-mode: standalone)').matches ||
-      (window.navigator as any).standalone === true;
+    const checkStandalone = () => {
+      const isStandalone =
+        window.matchMedia('(display-mode: standalone)').matches ||
+        (window.navigator as any).standalone === true;
 
-    if (isStandalone) {
-      setInstalled(true);
-    }
+      setInstalled(isStandalone);
+    };
+
+    checkStandalone();
 
     const handleBeforeInstallPrompt = (event: Event) => {
       event.preventDefault();
+
       setInstallPrompt(event as BeforeInstallPromptEvent);
+    };
+
+    const handleAppInstalled = () => {
+      setInstalled(true);
+      setInstallPrompt(null);
     };
 
     window.addEventListener(
@@ -34,21 +41,22 @@ const InstallAppButton: React.FC = () => {
       handleBeforeInstallPrompt
     );
 
-    window.addEventListener('appinstalled', () => {
-      setInstalled(true);
-      setInstallPrompt(null);
-    });
+    window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
       window.removeEventListener(
         'beforeinstallprompt',
         handleBeforeInstallPrompt
       );
+
+      window.removeEventListener(
+        'appinstalled',
+        handleAppInstalled
+      );
     };
   }, []);
 
   const handleInstall = async () => {
-    // Browser provided the install prompt
     if (installPrompt) {
       await installPrompt.prompt();
 
@@ -62,20 +70,21 @@ const InstallAppButton: React.FC = () => {
       return;
     }
 
-    // No browser prompt available
     alert(
-      'To install this app, open your browser menu and select "Install App" or "Add to Home screen".'
+      'Install this Restaurant Management App from your browser menu. In Chrome or Edge, click the Install icon in the address bar or open the browser menu and choose "Install app".'
     );
   };
 
-  // Don't show button after app is installed
   if (installed) {
     return (
-      <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-green-100 text-green-700 border border-green-200">
-        <span className="material-symbols-outlined text-[18px]">
+      <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-100 text-green-700 border border-green-200 whitespace-nowrap">
+        <span className="material-symbols-outlined text-[20px]">
           check_circle
         </span>
-        <span className="text-sm font-bold">App Installed</span>
+
+        <span className="text-sm font-bold">
+          App Installed
+        </span>
       </div>
     );
   }
@@ -84,14 +93,14 @@ const InstallAppButton: React.FC = () => {
     <button
       type="button"
       onClick={handleInstall}
-      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-on-primary font-bold text-sm shadow-sm hover:bg-primary-container transition-colors whitespace-nowrap"
+      className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-primary text-on-primary font-bold text-sm shadow-sm hover:bg-primary-container transition-colors whitespace-nowrap"
       title="Install Restaurant Management App"
     >
       <span className="material-symbols-outlined text-[20px]">
         install_mobile
       </span>
 
-      <span className="hidden sm:inline">
+      <span>
         Install App
       </span>
     </button>
