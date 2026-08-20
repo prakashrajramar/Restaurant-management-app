@@ -11,7 +11,6 @@ interface BeforeInstallPromptEvent extends Event {
 const InstallAppButton: React.FC = () => {
   const [installPrompt, setInstallPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
-
   const [installed, setInstalled] = useState(false);
 
   useEffect(() => {
@@ -27,7 +26,6 @@ const InstallAppButton: React.FC = () => {
 
     const handleBeforeInstallPrompt = (event: Event) => {
       event.preventDefault();
-
       setInstallPrompt(event as BeforeInstallPromptEvent);
     };
 
@@ -40,7 +38,6 @@ const InstallAppButton: React.FC = () => {
       'beforeinstallprompt',
       handleBeforeInstallPrompt
     );
-
     window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
@@ -48,11 +45,7 @@ const InstallAppButton: React.FC = () => {
         'beforeinstallprompt',
         handleBeforeInstallPrompt
       );
-
-      window.removeEventListener(
-        'appinstalled',
-        handleAppInstalled
-      );
+      window.removeEventListener('appinstalled', handleAppInstalled);
     };
   }, []);
 
@@ -81,10 +74,7 @@ const InstallAppButton: React.FC = () => {
         <span className="material-symbols-outlined text-[20px]">
           check_circle
         </span>
-
-        <span className="text-sm font-bold">
-          App Installed
-        </span>
+        <span className="text-sm font-bold">App Installed</span>
       </div>
     );
   }
@@ -99,10 +89,7 @@ const InstallAppButton: React.FC = () => {
       <span className="material-symbols-outlined text-[20px]">
         install_mobile
       </span>
-
-      <span>
-        Install App
-      </span>
+      <span>Install App</span>
     </button>
   );
 };
