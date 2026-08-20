@@ -10,7 +10,10 @@ import {
   RestaurantSettings,
 } from './types';
 
-const API_BASE = `${import.meta.env.VITE_API_URL || ''}/api`;
+const API_BASE =
+  import.meta.env.PROD
+    ? "https://restaurant-management-app-j3n2.onrender.com/api"
+    : "http://localhost:5000/api";
 
 export const api = {
   getFoodItems: async (params?: {
