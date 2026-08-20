@@ -17,7 +17,6 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-surface-container-highest pb-4 mb-6">
-
       {/* Page Title */}
       <div>
         <h2 className="font-display-sm text-2xl sm:text-3xl font-bold text-on-surface">
@@ -31,10 +30,8 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Right Side */}
       <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto justify-end">
-
         {/* Search */}
         <div className="flex items-center border border-outline-variant rounded-lg px-3 py-2 bg-surface-container-lowest focus-within:border-secondary transition-colors w-full sm:w-64">
-
           <span className="material-symbols-outlined text-on-surface-variant text-[20px] mr-2">
             search
           </span>
@@ -60,7 +57,7 @@ export const Header: React.FC<HeaderProps> = ({
           )}
         </div>
 
-        {/* Install App Button */}
+        {/* Install App Button (passed from App.tsx) */}
         {actionButton}
 
         {/* User Avatar */}
@@ -70,7 +67,6 @@ export const Header: React.FC<HeaderProps> = ({
         >
           PR
         </div>
-
       </div>
     </header>
   );

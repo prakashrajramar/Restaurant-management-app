@@ -18,7 +18,6 @@ import { api } from './api';
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [searchQuery, setSearchQuery] = useState('');
-
   const [settings, setSettings] = useState<RestaurantSettings | null>(null);
   const [settingsLoading, setSettingsLoading] = useState(false);
   const [settingsSaving, setSettingsSaving] = useState(false);
@@ -41,64 +40,55 @@ export const App: React.FC = () => {
       case 'dashboard':
         return {
           title: 'Food Inventory & Dashboard Overview',
-          subtitle:
-            'Real-time financial metrics, table status, and sales analytics.',
+          subtitle: 'Real-time financial metrics, table status, and sales analytics.',
         };
 
       case 'pos':
         return {
           title: 'Billing / Point of Sale (POS)',
-          subtitle:
-            'Select food items, manage cart quantities, calculate tax, and process payments.',
+          subtitle: 'Select food items, manage cart quantities, calculate tax, and process payments.',
         };
 
       case 'bookings':
         return {
           title: 'Table & Booking Management',
-          subtitle:
-            'View upcoming table reservations, check-in guests, and prevent booking overlaps.',
+          subtitle: 'View upcoming table reservations, check-in guests, and prevent booking overlaps.',
         };
 
       case 'tables':
         return {
           title: 'Restaurant Floor & Table Layout',
-          subtitle:
-            'Live visual table statuses (Available, Occupied, Reserved, Cleaning).',
+          subtitle: 'Live visual table statuses (Available, Occupied, Reserved, Cleaning).',
         };
 
       case 'food':
         return {
           title: 'Menu & Food Inventory',
-          subtitle:
-            'Manage dish names, categories, prices, veg/non-veg status, and availability.',
+          subtitle: 'Manage dish names, categories, prices, veg/non-veg status, and availability.',
         };
 
       case 'bills':
         return {
           title: 'Invoices & Sales History',
-          subtitle:
-            'Inspect past completed bills and trigger 80mm thermal receipts.',
+          subtitle: 'Inspect past completed bills and trigger 80mm thermal receipts.',
         };
 
       case 'customers':
         return {
           title: 'Customer Directory & History',
-          subtitle:
-            'View registered customers, phone numbers, visit counts, and lifetime spend.',
+          subtitle: 'View registered customers, phone numbers, visit counts, and lifetime spend.',
         };
 
       case 'reports':
         return {
           title: 'Financial & Sales Reports',
-          subtitle:
-            'Tax statements, gross revenue summaries, and top-selling food items.',
+          subtitle: 'Tax statements, gross revenue summaries, and top-selling food items.',
         };
 
       default:
         return {
           title: 'Settings & Restaurant Profile',
-          subtitle:
-            'Configure restaurant name, thermal printer options, and tax rates.',
+          subtitle: 'Configure restaurant name, thermal printer options, and tax rates.',
         };
     }
   };
@@ -107,18 +97,15 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex bg-background text-on-background">
-
-      {/* Persistent Sidebar */}
+      {/* Sidebar */}
       <Sidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         onNewOrder={() => setActiveTab('pos')}
       />
 
-      {/* Main Canvas Area */}
+      {/* Main Content */}
       <main className="flex-1 lg:ml-64 p-4 lg:p-grid-margin min-h-screen flex flex-col max-w-[1400px]">
-
-        {/* Header */}
         <Header
           title={pageInfo.title}
           subtitle={pageInfo.subtitle}
@@ -127,47 +114,35 @@ export const App: React.FC = () => {
           actionButton={<InstallAppButton />}
         />
 
-        {/* Page Content View */}
         <div className="flex-1">
-
-          {/* Dashboard */}
           {activeTab === 'dashboard' && (
             <DashboardPage onNavigate={setActiveTab} />
           )}
 
-          {/* POS */}
           {activeTab === 'pos' && <POSPage />}
 
-          {/* Bookings */}
           {activeTab === 'bookings' && (
             <BookingsPage searchQuery={searchQuery} />
           )}
 
-          {/* Tables */}
           {activeTab === 'tables' && <TablesPage />}
 
-          {/* Food Items */}
           {activeTab === 'food' && (
             <FoodItemsPage searchQuery={searchQuery} />
           )}
 
-          {/* Bills */}
           {activeTab === 'bills' && (
             <BillsPage searchQuery={searchQuery} />
           )}
 
-          {/* Customers */}
           {activeTab === 'customers' && (
             <CustomersPage searchQuery={searchQuery} />
           )}
 
-          {/* Reports */}
           {activeTab === 'reports' && <ReportsPage />}
 
-          {/* Settings */}
           {activeTab === 'settings' && (
             <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 max-w-2xl space-y-6 shadow-sm">
-
               <div className="flex justify-between items-center border-b border-outline-variant pb-3">
                 <div>
                   <h2 className="text-xl font-bold text-primary">
@@ -176,7 +151,7 @@ export const App: React.FC = () => {
 
                   <p className="text-xs text-on-surface-variant mt-1">
                     These settings are saved to the database and used for
-                    billing/receipts.
+                    billing and receipts.
                   </p>
                 </div>
               </div>
@@ -196,23 +171,17 @@ export const App: React.FC = () => {
 
                     try {
                       const saved = await api.updateSettings(settings);
-
                       setSettings(saved);
-                      setSettingsMessage(
-                        'Settings saved successfully.'
-                      );
+                      setSettingsMessage('Settings saved successfully.');
                     } catch (err: any) {
                       setSettingsMessage(
-                        err.response?.data?.error ||
-                          'Failed to save settings'
+                        err.response?.data?.error || 'Failed to save settings'
                       );
                     } finally {
                       setSettingsSaving(false);
                     }
                   }}
                 >
-
-                  {/* Restaurant Name */}
                   <div>
                     <label className="block text-xs font-bold uppercase text-on-surface-variant mb-1">
                       Restaurant Name
@@ -231,7 +200,6 @@ export const App: React.FC = () => {
                     />
                   </div>
 
-                  {/* Address */}
                   <div>
                     <label className="block text-xs font-bold uppercase text-on-surface-variant mb-1">
                       Address
@@ -249,7 +217,6 @@ export const App: React.FC = () => {
                     />
                   </div>
 
-                  {/* Phone */}
                   <div>
                     <label className="block text-xs font-bold uppercase text-on-surface-variant mb-1">
                       Phone
@@ -267,7 +234,6 @@ export const App: React.FC = () => {
                     />
                   </div>
 
-                  {/* GSTIN */}
                   <div>
                     <label className="block text-xs font-bold uppercase text-on-surface-variant mb-1">
                       GSTIN
@@ -285,7 +251,6 @@ export const App: React.FC = () => {
                     />
                   </div>
 
-                  {/* GST Tax Rate */}
                   <div>
                     <label className="block text-xs font-bold uppercase text-on-surface-variant mb-1">
                       GST Tax Rate (%)
@@ -307,7 +272,6 @@ export const App: React.FC = () => {
                     />
                   </div>
 
-                  {/* Printer Setup */}
                   <div>
                     <label className="block text-xs font-bold uppercase text-on-surface-variant mb-1">
                       Printer Setup
@@ -333,14 +297,12 @@ export const App: React.FC = () => {
                     </select>
                   </div>
 
-                  {/* Settings Message */}
                   {settingsMessage && (
                     <div className="p-3 rounded-lg bg-surface-container text-sm font-semibold">
                       {settingsMessage}
                     </div>
                   )}
 
-                  {/* Save Button */}
                   <button
                     disabled={settingsSaving}
                     className="w-full py-3 rounded-lg bg-primary text-on-primary font-bold hover:bg-primary-container disabled:opacity-50"
@@ -349,13 +311,10 @@ export const App: React.FC = () => {
                       ? 'Saving...'
                       : 'Save Restaurant Settings'}
                   </button>
-
                 </form>
               )}
-
             </div>
           )}
-
         </div>
       </main>
     </div>
