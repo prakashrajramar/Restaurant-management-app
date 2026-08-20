@@ -193,4 +193,12 @@ export const api = {
     );
     return res.data;
   },
+
+  // 🤖 Restro AI Chat
+  chat: async (message: string) => {
+    const res = await axios.post(`${API_BASE}/chat`, {
+      message,
+    });
+    return res.data.reply;
+  },
 };

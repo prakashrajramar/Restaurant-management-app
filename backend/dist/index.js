@@ -13,6 +13,7 @@ const booking_routes_1 = __importDefault(require("./routes/booking.routes"));
 const invoice_routes_1 = __importDefault(require("./routes/invoice.routes"));
 const dashboard_routes_1 = __importDefault(require("./routes/dashboard.routes"));
 const settings_routes_1 = __importDefault(require("./routes/settings.routes"));
+const chat_routes_1 = __importDefault(require("./routes/chat.routes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
@@ -26,6 +27,7 @@ app.use('/api/bookings', booking_routes_1.default);
 app.use('/api/invoices', invoice_routes_1.default);
 app.use('/api/dashboard', dashboard_routes_1.default);
 app.use('/api/settings', settings_routes_1.default);
+app.use('/api/chat', chat_routes_1.default);
 // Health check endpoint
 app.get('/', (_req, res) => res.json({ status: 'OK', service: 'Restaurant Management API' }));
 app.get('/api/health', (_req, res) => {

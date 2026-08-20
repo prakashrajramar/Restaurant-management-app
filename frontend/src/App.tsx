@@ -14,6 +14,7 @@ import { ReportsPage } from './pages/Reports';
 
 import { RestaurantSettings } from './types';
 import { api } from './api';
+import ChatAssistant from './components/ChatAssistant';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -317,6 +318,9 @@ export const App: React.FC = () => {
           )}
         </div>
       </main>
+
+    {/* Floating AI Assistant */}
+    <ChatAssistant />
     </div>
   );
 };
