@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
     const { message } = req.body;
 
     const completion = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
+      model: "openai/gpt-oss-20b",
 
       messages: [
         {
@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
 You are Restro AI.
 
 You only answer questions about this Restaurant Management App.
-
+s
 Features:
 - Dashboard
 - POS Billing
